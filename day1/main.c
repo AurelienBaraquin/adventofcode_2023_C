@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <fcntl.h>
-#include <sys/stat.h>
 #include <string.h>
 #include <sys/types.h>
 #include <stdbool.h>
@@ -16,7 +14,7 @@ int get_first_digit(char *str)
 {
     for (int i = 0; str[i]; i++)
         if (is_digit(str[i]))
-            return i;
+            return str[i] - '0';
     return -1;
 }
 
@@ -24,11 +22,10 @@ int get_last_digit(char *str)
 {
     for (int i = strlen(str) - 1; i >= 0; i--)
         if (is_digit(str[i]))
-            return i;
+            return str[i] - '0';
     return -1;
 }
 
-// function getlines reads lines from stdin and returns them as an array of strings
 char **getlines(int *size)
 {
     char **lines = NULL;
