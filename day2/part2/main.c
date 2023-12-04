@@ -6,12 +6,6 @@ typedef struct drawing {
     int blue;
 } drawing_t;
 
-static const drawing_t max = {
-    .red = 12,
-    .green = 13,
-    .blue = 14
-};
-
 const char colors[3][6] = {
     "red",
     "green",
@@ -45,11 +39,8 @@ int parse(String *str)
         free(tmp);
     }
 
-    if (tmp_draw.red > max.red || tmp_draw.green > max.green || tmp_draw.blue > max.blue)
-        return 0;
-
     free(reroll);
-    return 1;
+    return tmp_draw.red * tmp_draw.green * tmp_draw.blue;
 }
 
 int main(void)
@@ -67,11 +58,10 @@ int main(void)
         return 1;
 
     int total = 0;
+
     for (size_t i = 0; arr[i]; i++) {
-        int id = arr[i]->to_int(arr[i]->sub_c(arr[i], arr[i]->find_c(arr[i], " "), arr[i]->find_c(arr[i], ":")));
         arr[i] = arr[i]->sub_c(arr[i], arr[i]->find_c(arr[i], ":") + 1, arr[i]->size(arr[i]));
-        if (parse(arr[i]))
-            total += id;
+        total += parse(arr[i]);
     }
 
     printf("%d\n", total);
